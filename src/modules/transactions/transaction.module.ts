@@ -1,4 +1,5 @@
 import { eventHandlers } from '@/modules/transactions/application/events';
+import { queryHandlers } from '@/modules/transactions/application/queries';
 import { useCases } from '@/modules/transactions/application/use-cases';
 import { TransactionsController } from '@/modules/transactions/infrastructure/http/controllers/transactions.controller';
 import { Transactions } from '@/modules/transactions/infrastructure/persistence/database/models/transaction.model';
@@ -12,6 +13,12 @@ import { UuidModule } from 'nestjs-uuid';
 @Module({
   imports: [CqrsModule, MongooseModule.forFeature([Transactions]), UuidModule],
   controllers: [TransactionsController],
-  providers: [...eventHandlers, ...useCases, TransactionsRepository, TransactionsService],
+  providers: [
+    ...eventHandlers,
+    ...useCases,
+    ...queryHandlers,
+    TransactionsRepository,
+    TransactionsService,
+  ],
 })
 export class TransactionModule {}

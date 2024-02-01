@@ -8,9 +8,15 @@ import { Transaction } from '@/modules/transactions/domain/interfaces/transactio
 export const TRANSACTIONS_REPOSITORY_TOKEN = 'TRANSACTIONS_REPOSITORY_TOKEN';
 
 export interface TransactionsRepository extends Crud<Transaction, TransactionEntity> {
-  findByAccount(
+  paginateByAccount(
     account: string,
     filter: Filter<Transaction>,
     options: QueryParsedOptions,
   ): Promise<Pagination<TransactionEntity>>;
+
+  findByAccount(
+    account: string,
+    filter: Filter<Transaction>,
+    options: QueryParsedOptions,
+  ): Promise<TransactionEntity[]>;
 }

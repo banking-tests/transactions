@@ -4,15 +4,15 @@ import { Executable } from '@/core/domain/executable.interface';
 import { Context } from '@/core/domain/interfaces/context.interface';
 import { Json } from '@/core/types/general/json.type';
 import { QueryParsedOptions } from '@/core/types/general/query-parsed-options.type';
+import { groupTransactionsByMonth } from '@/modules/finance/domain/utils/get-profitability-by-months';
 import {
   TRANSACTIONS_SERVICE_TOKEN,
   TransactionsService,
 } from '@/modules/transactions/domain/contracts/transactions.service';
 import { TransactionsGroups } from '@/modules/transactions/domain/types/transactions-groups.type';
-import { groupTransactionsByCategory } from '@/modules/transactions/domain/utils/group-transactions-by-category.util';
 
 @UseCase()
-export class GroupTransactionsByCategoryUseCase implements Executable {
+export class GroupTransactionsByMonthUseCase implements Executable {
   constructor(
     @InjectService(TRANSACTIONS_SERVICE_TOKEN)
     private readonly transactionsService: TransactionsService,
@@ -29,7 +29,7 @@ export class GroupTransactionsByCategoryUseCase implements Executable {
       options,
     );
 
-    const groupedTransactions = groupTransactionsByCategory(
+    const groupedTransactions = groupTransactionsByMonth(
       transactions.map((transaction) => transaction.toJson()),
     );
 

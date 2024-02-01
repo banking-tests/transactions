@@ -21,7 +21,7 @@ export class TransactionsDatabaseRepository extends BaseRepository<
     super(transactionModel, TransactionEntity);
   }
 
-  public async findByAccount(
+  public async paginateByAccount(
     account: string,
     filter: Filter<Transaction>,
     options: QueryParsedOptions,
@@ -46,5 +46,24 @@ export class TransactionsDatabaseRepository extends BaseRepository<
       nextPage: result.page + 1 <= result.pages ? result.page + 1 : undefined,
       hasMore: result.page < result.pages,
     };
+  }
+
+  public async findByAccount(
+    account: string,
+    filter: Filter<Transaction>,
+    options: QueryParsedOptions,
+  ): Promise<TransactionEntity[]> {
+    const docs = await this.transactionModel.find(
+      {
+        ...filter,
+        account: {
+          $in: [account],
+        },
+      },
+      {},
+      options,
+    );
+
+    return docs.map((transaction) => TransactionEntity.create(transaction.toJSON()));
   }
 }

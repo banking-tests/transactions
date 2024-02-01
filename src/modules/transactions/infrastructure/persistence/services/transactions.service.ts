@@ -20,11 +20,19 @@ export class TransactionsService extends BaseService<Transaction, TransactionEnt
     super(transactionsRepository);
   }
 
-  public async findByAccount(
+  public async paginateByAccount(
     account: string,
     filter: Filter<Transaction>,
     options: QueryParsedOptions,
   ): Promise<Pagination<TransactionEntity>> {
+    return this.transactionsRepository.paginateByAccount(account, filter, options);
+  }
+
+  public async findByAccount(
+    account: string,
+    filter: Filter<Transaction>,
+    options: QueryParsedOptions,
+  ): Promise<TransactionEntity[]> {
     return this.transactionsRepository.findByAccount(account, filter, options);
   }
 }

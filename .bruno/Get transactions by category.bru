@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: {{HOST}}/v1/transactions/groups
+  url: {{HOST}}/v1/transactions/groups?account=aee62b7d-9774-414f-af5f-d59db1d126e7
   body: none
   auth: none
+}
+
+query {
+  account: aee62b7d-9774-414f-af5f-d59db1d126e7
 }

@@ -39,7 +39,11 @@ export class TransactionsController {
 
   @Get('/groups')
   @ApiKeyHeader('Group transactions by category')
-  public groupTransactionsByCategory(@Ctx() ctx: Context) {
-    return this.groupTransactionsByCategoryUseCase.execute(ctx);
+  public groupTransactionsByCategory(
+    @Ctx() ctx: Context,
+    @QueryParser('filter') filter: Json,
+    @QueryParser('options') options: QueryParsedOptions,
+  ) {
+    return this.groupTransactionsByCategoryUseCase.execute(ctx, filter, options);
   }
 }
